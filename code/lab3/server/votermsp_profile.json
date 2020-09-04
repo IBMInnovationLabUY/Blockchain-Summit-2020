@@ -1,0 +1,41 @@
+{
+    "name": "votermspprofile",
+    "description": "Network on IBP v2",
+    "version": "1.0.0",
+    "client": {
+        "organization": "votermsp"
+    },
+    "organizations": {
+        "votermsp": {
+            "mspid": "votermsp",
+            "certificateAuthorities": [
+                "n49543d-voterca.cluster-blockchain-03c40517cf9b40a998d7b862a9fd8887-0000.sao01.containers.appdomain.cloud:7054"
+            ],
+            "peers": [
+                "n49543d-voterpeer.cluster-blockchain-03c40517cf9b40a998d7b862a9fd8887-0000.sao01.containers.appdomain.cloud:7051"
+            ]
+        }
+    },
+    "peers": {
+        "n49543d-voterpeer.cluster-blockchain-03c40517cf9b40a998d7b862a9fd8887-0000.sao01.containers.appdomain.cloud:7051": {
+            "url": "grpcs://n49543d-voterpeer.cluster-blockchain-03c40517cf9b40a998d7b862a9fd8887-0000.sao01.containers.appdomain.cloud:7051",
+            "tlsCACerts": {
+                "pem": "-----BEGIN CERTIFICATE-----\nMIIB/jCCAaSgAwIBAgIUYtISbbeRk/ePXzg6oWSiBgmp6RowCgYIKoZIzj0EAwIw\nXTELMAkGA1UEBhMCVVMxFzAVBgNVBAgTDk5vcnRoIENhcm9saW5hMRQwEgYDVQQK\nEwtIeXBlcmxlZGdlcjEPMA0GA1UECxMGRmFicmljMQ4wDAYDVQQDEwV0bHNjYTAe\nFw0yMDA5MDQwMTIwMDBaFw0zNTA5MDEwMTIwMDBaMF0xCzAJBgNVBAYTAlVTMRcw\nFQYDVQQIEw5Ob3J0aCBDYXJvbGluYTEUMBIGA1UEChMLSHlwZXJsZWRnZXIxDzAN\nBgNVBAsTBkZhYnJpYzEOMAwGA1UEAxMFdGxzY2EwWTATBgcqhkjOPQIBBggqhkjO\nPQMBBwNCAATEuwRh//wlkPzzuugPzWqd0v3D498CtM18EMm1KiXu4+5P1WeNYPzX\n95hMDqx/o/aDxo60z0bQLA6vOzHZsm1Oo0IwQDAOBgNVHQ8BAf8EBAMCAQYwDwYD\nVR0TAQH/BAUwAwEB/zAdBgNVHQ4EFgQU25QHwngxGoD6+3I2EdW9WnWRaKcwCgYI\nKoZIzj0EAwIDSAAwRQIhAPmg4V/VzNBOmZlbd+vizzf2Q4E+I/cYbU4wjy+FzWpT\nAiAdMP1RAiLToJjlSpiqFUX2Sv4I7d/gtEcqrWXHHFdQKw==\n-----END CERTIFICATE-----\n"
+            },
+            "grpcOptions": {
+                "ssl-target-name-override": "n49543d-voterpeer.cluster-blockchain-03c40517cf9b40a998d7b862a9fd8887-0000.sao01.containers.appdomain.cloud"
+            }
+        }
+    },
+    "certificateAuthorities": {
+        "n49543d-voterca.cluster-blockchain-03c40517cf9b40a998d7b862a9fd8887-0000.sao01.containers.appdomain.cloud:7054": {
+            "url": "https://n49543d-voterca.cluster-blockchain-03c40517cf9b40a998d7b862a9fd8887-0000.sao01.containers.appdomain.cloud:7054",
+            "caName": "ca",
+            "tlsCACerts": {
+                "pem": [
+                    "-----BEGIN CERTIFICATE-----\nMIIDhTCCAyugAwIBAgIRAJG/WrULEMAGnRpiKiElFCgwCgYIKoZIzj0EAwIwgc4x\nCzAJBgNVBAYTAlVTMRcwFQYDVQQIEw5Ob3J0aCBDYXJvbGluYTEPMA0GA1UEBxMG\nRHVyaGFtMQwwCgYDVQQKEwNJQk0xEzARBgNVBAsTCkJsb2NrY2hhaW4xcjBwBgNV\nBAMTaW40OTU0M2Qtdm90ZXJjYS5jbHVzdGVyLWJsb2NrY2hhaW4tMDNjNDA1MTdj\nZjliNDBhOTk4ZDdiODYyYTlmZDg4ODctMDAwMC5zYW8wMS5jb250YWluZXJzLmFw\ncGRvbWFpbi5jbG91ZDAeFw0yMDA5MDQwMTI1MTlaFw0zMDA5MDIwMTI1MTlaMIHO\nMQswCQYDVQQGEwJVUzEXMBUGA1UECBMOTm9ydGggQ2Fyb2xpbmExDzANBgNVBAcT\nBkR1cmhhbTEMMAoGA1UEChMDSUJNMRMwEQYDVQQLEwpCbG9ja2NoYWluMXIwcAYD\nVQQDE2luNDk1NDNkLXZvdGVyY2EuY2x1c3Rlci1ibG9ja2NoYWluLTAzYzQwNTE3\nY2Y5YjQwYTk5OGQ3Yjg2MmE5ZmQ4ODg3LTAwMDAuc2FvMDEuY29udGFpbmVycy5h\ncHBkb21haW4uY2xvdWQwWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAAQ1saPb20F7\n0UgROR/nMemskqt85TqsvZhf7mq+TpZk9a5HinPnSG4KgsE9eIOlMr72+Cey9I/R\n4SndAva3t4Ijo4HnMIHkMIHhBgNVHREEgdkwgdaCaW40OTU0M2Qtdm90ZXJjYS5j\nbHVzdGVyLWJsb2NrY2hhaW4tMDNjNDA1MTdjZjliNDBhOTk4ZDdiODYyYTlmZDg4\nODctMDAwMC5zYW8wMS5jb250YWluZXJzLmFwcGRvbWFpbi5jbG91ZIJpbjQ5NTQz\nZC12b3RlcmNhLmNsdXN0ZXItYmxvY2tjaGFpbi0wM2M0MDUxN2NmOWI0MGE5OThk\nN2I4NjJhOWZkODg4Ny0wMDAwLnNhbzAxLmNvbnRhaW5lcnMuYXBwZG9tYWluLmNs\nb3VkMAoGCCqGSM49BAMCA0gAMEUCIQDlAYMDEDxDuc8cVW4Gk4mjyb8/0MH9y7QN\n96rb3WQ6GwIgPZdc0xWqtYt9uhAY4yoAzc9ao9nfxTO/TDGQ0c4Gw2E=\n-----END CERTIFICATE-----\n"
+                ]
+            }
+        }
+    }
+}
