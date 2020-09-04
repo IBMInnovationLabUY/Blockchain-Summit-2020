@@ -89,6 +89,9 @@ La extensión le generará un contrato basado en el idioma seleccionado y el nom
 ### Exploremos el smart contract generado
 
 La plantilla de código del smartcontract generado proporciona un buen ejemplo de algunas operaciones comunes para interactuar con datos en un ledger de blockchain. 
+
+Para tener el códico como se mostró en la demo, se deben cambiar los atributos del auto en el archivo car.ts. En vez de tener un value del tipo string, tendremos un owner de tipo string y un make de tipo string. Los métodos que deben ser modificados levemente son los que están a continuación, además del update car que se debe modificar análogamente (en vez de tener un parámetro value, tendremos los parámeteos owner y make. Estos se asignan al car creado).
+
 Observe las líneas que comienzan con `@Transaction`: estas son funciones que definen las transacciones de su contrato, es decir, las cosas que le permite hacer para interactuar con el ledger.
 
 Veamos la función` createCar`:
@@ -160,7 +163,7 @@ No entraremos en demasiados detalles en este tutorial, pero aquí hay algunos da
 
 * También hay una sola Autoridad de certificación (CA) `ca.org1.example.com`, y un solo nodo de orden` orderer.example.com`. 
 
-* Hay una sola organización en esta sencilla red de blockchain llamada `Org1`. Recuerde que `Org1` posee el par que vimos en la sección` Nodos`. Una red con una sola organización no es muy realista para el uso en el mundo real, ya que el objetivo es compartir un libro de contabilidad entre varias organizaciones, ¡pero es suficiente para fines de desarrollo local! En `Organizaciones` verá` Org1MSP`: esta es la `ID de MSP` de Org1. 
+* Hay una sola organización en esta sencilla red de blockchain llamada `Org1`. Recuerde que `Org1` posee el peer que vimos en la sección` Nodos`. Una red con una sola organización no es muy realista para el uso en el mundo real, ya que el objetivo es compartir un libro de contabilidad entre varias organizaciones, ¡pero es suficiente para fines de desarrollo local! En `Organizaciones` verá` Org1MSP`: esta es la `ID de MSP` de Org1. 
 
 * Los siguientes contenedores de docker se inician en su máquina local: Orderer, Certificate Authority, CouchDB y Peer.
 
@@ -168,14 +171,14 @@ Ahora que ha iniciado el runtime de Fabric local, es hora de instalar e instanci
 
 ### Instalar el smart contract
 
-En una red real, cada una de las organizaciones que respaldarán transacciones instalarán el smart contract en sus peers, luego el contrato se instanciará en el canal. Nuestro runtime local básico de Fabric solo tiene una única organización (`Org1`) con un solo par (` peer0.org1.example.com`) y un solo canal (`mychannel`).
+En una red real, cada una de las organizaciones que respaldarán transacciones instalarán el smart contract en sus peers, luego el contrato se instanciará en el canal. Nuestro runtime local básico de Fabric solo tiene una única organización (`Org1`) con un solo peer (` peer0.org1.example.com`) y un solo canal (`mychannel`).
 Por lo tanto, solo tenemos que instalar el contrato en ese único peer, luego podremos instanciarlo en `mychannel`.
 
 1. En el panel `Local Fabric OPS`, busque` + Install` (está debajo de Smart Contracts> Installed) y haga clic en él.
 
-2. Se le pedirá que elija un paquete para instalar. Elija `demo_codeday@0.0.1`.
+2. Se le pedirá que elija un paquete para instalar. Elija `BlockchainSummit@0.0.1`.
 
-Debería ver "demo_codeday@0.0.1" en la lista de Smart Contracts> Installed.
+Debería ver "BlockchainSummit@0.0.1" en la lista de Smart Contracts> Installed.
 
 ### Instanciar el smart contract
 
@@ -183,13 +186,13 @@ Los smart contracts instalados aún no están listos para ser invocados por las 
 
 1. En el panel `Local Fabric OPS`, busque` + Instantiate` (está en Smart Contracts> Instantiate) y haga clic en él.
 
-2. Se le pedirá que elija un contrato inteligente para crear una instancia. Elija `demo_codeday@0.0.1`.
+2. Se le pedirá que elija un contrato inteligente para crear una instancia. Elija `BlockchainSummit@0.0.1`.
 
 3. Se le preguntará a qué función llamar. Si desea utilizar una función específica como parte de su instancia, puede ingresarlo aquí.En nuestro caso solo presione 'Enter' para omitir este paso.
 
 4. Se le preguntará si desea proporcionar un archivo de configuración de datos privados. Para este tutorial simplemente haga clic en `No`.
 
-La creación de instancias puede demorar un poco más que la instalación. Luego `demo_codeday@0.0.1` aparecera en la lista de contratos inteligentes > Instantiare.
+La creación de instancias puede demorar un poco más que la instalación. Luego `BlockchainSummit@0.0.1` aparecera en la lista de contratos inteligentes > Instantiate.
 
 ### Realizar operaciones en nuestra red
 
@@ -201,17 +204,17 @@ Entonces, tenemos un gateway y una wallet asociada con una sola identidad, por l
 
 1. Haga clic en `local_fabric` (en`Fabric Gateways`) para conectarse a través de este gateway. Ahora verá`Connected via gateway: local_fabric, Using ID: admin` y una sección contraída llamada` Channels`.
 
-2. Expanda `Channels`, luego expanda` mychannel` y `demo_codeday@0.0.1`. Verá una lista de todas las transacciones que se definieron en el smart contract.
+2. Expanda `Channels`, luego expanda` mychannel` y `BlockchainSummit@0.0.1`. Verá una lista de todas las transacciones que se definieron en el smart contract.
 
-3. Primero, crearemos un assets. Haga clic derecho en createMyAsset y seleccione `Submit Transaction`. Se le pedirá que proporcione argumentos para la transacción: Ejemplo `[" 001 ","Refractive index: from 2,417 to 2,419 (monorefringent)"]` (o cualquier clave y valor que desee).
+3. Primero, crearemos un asset. Haga clic derecho en createCar y seleccione `Submit Transaction`. Se le pedirá que proporcione argumentos para la transacción: Ejemplo `[" 001 ","Juan", "Mitsubishi"]` (o cualquier clave y valores que desee).
 
-4. Luego se le pedirá que configure los datos transitorios para la transacción. No configuremos ninguno, solo precionemos Enter par omitirlo.
+4. Luego se le pedirá que configure los datos transitorios para la transacción. No configuremos ninguno, solo presionemos Enter par omitirlo.
 
-5. Ahora, seleccionemos updateMyAsset. Esta vez, para los argumento proporcione la misma clave y un valor diferente, por ejemplo`[" 001 ","Refractive index: 2,50 "]`. Entonces, ahora el valor de la clave 001 en nuestro ledger debería ser "Refractive index: 2,50". Vamos a comprobar eso en el siguiente paso
+5. Ahora, seleccionemos updateCar. Esta vez, para los argumentos proporcione la misma clave y marca y un dueño diferente, por ejemplo`[" 001 ","María", "Mitsubishi"]`. Entonces, ahora el valor de la clave 001 en nuestro ledger debería ser make:"Mitsubishi", owner:"María". Vamos a comprobar eso en el siguiente paso.
 
-6. Usemos ahora `readMyAsset` para leer en vez de escribir el ledger, por lo que esta vez seleccionaremos` Evaluete transacción`. Ingrese `[" 001 "]` (o la clave que haya establecido al crear su assets) como argumento. Debería ver lo siguiente en la consola de salida:
+6. Usemos ahora `readCar` para leer en vez de escribir el ledger, por lo que esta vez seleccionaremos` Evaluate transaction`. Ingrese `[" 001 "]` (o la clave que haya establecido al crear su asset) como argumento. Debería ver lo siguiente en la consola de salida:
 ```
-[SUCCESS] Returned value from readDiamond: {"value":"Refractive index: from 2,417 to 2,419 (monorefringent)"}
+[SUCCESS] Returned value from readCar: {"make":"Mitsubishi","owner":"María"}
 ```
 
 
