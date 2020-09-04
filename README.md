@@ -64,7 +64,7 @@ En este hands-on  comprenderemos las bases de una red blockchain y los componen
 * Generar un smart contract
 * Ejecutar Hyperledger Fabric local (preconfigurado)
 * Desplegar el smart contract en _local_fabric_
-* Realizar transacciones con el smart contrar 
+* Realizar transacciones con el smart contract 
 
 ### Crear un nuevo proyecto
 
@@ -76,7 +76,7 @@ La extensión de IBP puede generar un esqueleto de smart contract en alguno de l
 
 3. Elija un lenguaje del smart contract. JavaScript, TypeScript, Java y Go son los disponibles. A los efectos de este tutorial, elija `TypeScript`.
 
-4. La extensión le preguntará si desea nombrar el assets en el contrato generado. Esto se configurará de manera predeterminada en `MyAsset`, pero puede utilizar el que quiera, yo lo llamare **Diamond** ya que quiero una red para la trazabilidad de diamantes. 
+4. La extensión le preguntará si desea nombrar el asset en el contrato generado. Esto se configurará de manera predeterminada en `MyAsset`, pero puede utilizar el que quiera, yo lo llamare **Car** ya que quiero una red para la trazabilidad de automóviles. 
 
 5. Elija una ubicación para guardar el proyecto. Haga clic en `Examinar`, luego haga clic en` Nueva carpeta` y asigne al proyecto el nombre que desee, yo usare `demo_codeday`.
 
@@ -91,42 +91,43 @@ La extensión le generará un contrato basado en el idioma seleccionado y el nom
 La plantilla de código del smartcontract generado proporciona un buen ejemplo de algunas operaciones comunes para interactuar con datos en un ledger de blockchain. 
 Observe las líneas que comienzan con `@Transaction`: estas son funciones que definen las transacciones de su contrato, es decir, las cosas que le permite hacer para interactuar con el ledger.
 
-Veamos la función` createDiamond`:
+Veamos la función` createCar`:
 
 ```
 @Transaction()
-    public async createDiamond(ctx: Context,DiamondId: string, value: string): Promise<void> {
-        const exists = await this.myAssetExists(ctx, DiamondId);
+    public async createCar(ctx: Context, carId: string, owner: string, make: string): Promise<void> {
+        const exists = await this.carExists(ctx, carId);
         if (exists) {
-            throw new Error(`The my asset ${DiamondId} already exists`);
+            throw new Error(`The car ${carId} already exists`);
         }
-        const Diamond = new Diamond();
-        Diamond.value = value;
-        const buffer = Buffer.from(JSON.stringify(Diamond));
-        await ctx.stub.putState(DiamondId, buffer);
+        const car = new Car();
+        car.owner = owner;
+        car.make = make;
+        const buffer = Buffer.from(JSON.stringify(car));
+        await ctx.stub.putState(carId, buffer);
     }
 ```
 
-Los corchetes vacíos en `@Transaction ()` indican que esta función está destinada a cambiar el contenido del ledger.La función se llama `createDiamonds` y toma` DiamondsId` y un `value`, los cuales son string. Cuando se envíe esta transacción, se creará un nuevo activo, con la clave `DiamondsId` y el valor` value`. Por ejemplo, si tuviéramos que crear "001", "Diamond x", entonces, cuando luego leamos el valor de la clave `001`, aprenderemos que el valor de ese estado particular es` Diamond x`.
+Los corchetes vacíos en `@Transaction ()` indican que esta función está destinada a cambiar el contenido del ledger.La función se llama `createCar` y toma` carId`, un `owner` y un `make` , los cuales son string. Cuando se envíe esta transacción, se creará un nuevo activo, con la clave `carId` y los valores `owner` y `make`. Por ejemplo, si tuviéramos que crear "001", "Juan", "Nissan", entonces, cuando luego leamos el valor de la clave `001`, aprenderemos que el dueño es `Juan` y la marca es `Nissan` para ese estado particular.
 
 Ahora, veamos la próxima transacción:
 
 ```
 
     @Transaction(false)
-    @Returns('Diamond')
-    public async readDiamond(ctx: Context, DiamondId: string): Promise<Diamond> {
-        const exists = await this.DiamondExists(ctx, DiamondId);
+    @Returns('Car')
+    public async readCar(ctx: Context, carId: string): Promise<Car> {
+        const exists = await this.carExists(ctx, carId);
         if (!exists) {
-            throw new Error(`The my asset ${DiamondId} does not exist`);
+            throw new Error(`The car ${carId} does not exist`);
         }
-        const buffer = await ctx.stub.getState(DiamondId);
-        const Diamond = JSON.parse(buffer.toString()) as Diamond;
-        return Diamond;
+        const buffer = await ctx.stub.getState(carId);
+        const car = JSON.parse(buffer.toString()) as Car;
+        return car;
     }
 
 ```
-Esta funcion comienza con `@Transaction (false)` - el "falso" significa que esta función no está destinada a cambiar el contenido del ledger. Como puede ver, esta función solo toma `DiamondId`, y devuelve el valor del estado al que apunta la clave.
+Esta funcion comienza con `@Transaction (false)` - el "falso" significa que esta función no está destinada a cambiar el contenido del ledger. Como puede ver, esta función solo toma `carId`, y devuelve el valor del estado al que apunta la clave.
 
 ### Empaquetar el Smart Contract
 
@@ -136,7 +137,7 @@ Ahora que tenemos creado nuestro contrato inteligente y conocemos las transaccio
 
 2. Pase el mouse sobre el panel 'Smart Contracts', haga clic en el menú '...' y seleccione 'Package Open Project' en el menú desplegable.
 
-3. Veremos un nuevo paquete en la lista, `demo_codeday @ 0.0.1` (o el nombre que le a la carpeta).
+3. Veremos un nuevo paquete en la lista, `BlockchainSummit @ 0.0.1` (o el nombre que le a la carpeta).
 
 El paquete que acabamos de crear se puede instalar en cualquier peer de Hyperledger Fabric. Por ejemplo, puede hacer clic con el botón derecho y elegir "Exportar paquete", luego implementarlo en un entorno de nube utilizando la consola de herramientas operativas de IBM Blockchain Platform. Nosotros no vamos a exportarlos porque desplegaremos la red localmente en el runtime que viene preconfigurado con la extensión VS Code.
 
@@ -147,11 +148,11 @@ El panel `Local Fabric OPS` (en la vista de IBM Blockchain Platform) le permite 
 ```
 Local Fabric runtime is stopped. Click to start.
 ```
-Haga clic en ese mensaje y la extensión comenzará a ejecutar contenedores Docker. Aparecerá el mensaje "Se está iniciando el tiempo de ejecución de Local Fabric ...", y cuando la tarea est.é completa, verá un conjunto de secciones expandibles etiquetadas como `Smart Contracts`,` Channels`, `Nodes` y `Organizations.`.
+Haga clic en ese mensaje y la extensión comenzará a ejecutar contenedores Docker. Aparecerá el mensaje "Se está iniciando el tiempo de ejecución de Local Fabric ...", y cuando la tarea esté completa, verá un conjunto de secciones expandibles etiquetadas como `Smart Contracts`,` Channels`, `Nodes` y `Organizations.`.
 
 No entraremos en demasiados detalles en este tutorial, pero aquí hay algunos datos útiles para saber:
 
-* La sección 'Smart Contracts' muestra los contratos 'Instanciados' e 'Instalados' en esta red. Los siguientes pasos en este hans-on seran __instalar__  y luego __instanciar__ el smart contract que hemos empaquetado.
+* La sección 'Smart Contracts' muestra los contratos 'Instanciados' e 'Instalados' en esta red. Los siguientes pasos en este hands-on seran __instalar__  y luego __instanciar__ el smart contract que hemos empaquetado.
 
 * En `channels` hay un solo canal llamado` mychannel`. Para poder utilizar un smart contract, debe estar __instanciado__ en un canal. Esto lo veremos en el siguiente paso. 
 
