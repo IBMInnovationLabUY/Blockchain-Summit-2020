@@ -78,7 +78,7 @@ La extensión de IBP puede generar un esqueleto de smart contract en alguno de l
 
 4. La extensión le preguntará si desea nombrar el asset en el contrato generado. Esto se configurará de manera predeterminada en `MyAsset`, pero puede utilizar el que quiera, yo lo llamare **Car** ya que quiero una red para la trazabilidad de automóviles. 
 
-5. Elija una ubicación para guardar el proyecto. Haga clic en `Examinar`, luego haga clic en` Nueva carpeta` y asigne al proyecto el nombre que desee, yo usare `demo_codeday`.
+5. Elija una ubicación para guardar el proyecto. Haga clic en `Examinar`, luego haga clic en` Nueva carpeta` y asigne al proyecto el nombre que desee, yo usare `BlockchainSummit`.
 
 6. Haga clic en `Crear` y luego seleccione la nueva carpeta que acaba de crear y haga clic en` Guardar`.
 
